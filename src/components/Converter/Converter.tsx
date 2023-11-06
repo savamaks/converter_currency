@@ -76,7 +76,7 @@ export const Converter = () => {
 
                 <div className={s.box}>
                     <button disabled={loader ? true : false} onClick={reverseCurrency}>
-                        {loader ? <Loader /> : <img className={s.image} src="swap.png" alt="reverse" />}
+                        {loader ? <Loader /> : <img className={s.image} src="./assets/swap.png" alt="reverse" />}
                     </button>
                 </div>
 
