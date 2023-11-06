@@ -76,7 +76,7 @@ export const Converter = () => {
 
                 <div className={s.box}>
                     <button disabled={loader ? true : false} onClick={reverseCurrency}>
-                        {loader ? <Loader /> : <img className={s.image} src="https://cdn-icons-png.flaticon.com/512/7133/7133490.png" alt="reverse" />}
+                        {loader ? <Loader /> : <img className={s.image} src="./swap.png" alt="reverse" />}
                     </button>
                 </div>
 
