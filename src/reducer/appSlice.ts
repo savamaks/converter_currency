@@ -2,8 +2,8 @@ import {  createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     statusLoadingNameCurrency: "",
-    currencyTo: "RUB",
-    currencyFrom: "USD",
+    currencyTo: "USD",
+    currencyFrom: "RUB",
     allCurrencyKey: [],
     allCurrencyName: [],
     resultConvert: 0,

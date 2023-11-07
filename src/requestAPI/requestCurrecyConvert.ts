@@ -1,5 +1,5 @@
 
-export const requestCurrecyConvert = async(value:number,currencyTo:string,currencyFrom:string) => {
+export const requestCurrecyConvert = async(value:string,currencyTo:string,currencyFrom:string) => {
 try {
     const res = await fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${currencyTo}&from=${currencyFrom}&amount=${value}`,{
     method:'GET',

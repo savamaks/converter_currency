@@ -19,8 +19,8 @@ function App() {
     };
     useEffect(() => {
         dispatch(changeLoad("loading"));
-        dispatch(changeCurrencyTo("RUB"));
-        dispatch(changeCurrencyFrom("USD"));
+        dispatch(changeCurrencyTo("USD"));
+        dispatch(changeCurrencyFrom("RUB"));
         dispatch(changeResultConver(""));
 
         loadNameCurrency();

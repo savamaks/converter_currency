@@ -2,25 +2,28 @@ import { useAppDispatch, useAppSelector } from "../../reducer/store";
 import { changeCurrencyFrom, changeCurrencyTo, changeResultConver } from "../../reducer/appSlice";
 import { requestCurrecyConvert } from "../../requestAPI";
 import s from "./Converter.module.scss";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Loader } from "..";
 
-export const Converter = () => {
+export const Converter:FC = () => {
     const { allCurrencyKey, allCurrencyName } = useAppSelector((state) => state.appSlice);
     const { currencyTo, currencyFrom, resultConvert } = useAppSelector((state) => state.appSlice);
-    const [currency, setCurrency] = useState(0);
+    const [currency, setCurrency] = useState('');
     const [loader, setLoader] = useState(false);
     const dispatch = useAppDispatch();
 
     const changeCurrency = async (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setLoader(true);
-        if (+e.target.value > 0) {
-            setCurrency(+e.target.value);
+        setCurrency(e.target.value);
+        if (+e.target.value > 0 && !/[a-zа-яё.!&?\/,:;]/i.test(e.target.value)) {
+            console.log(e.target.value, currencyTo, currencyFrom);
 
-            const result = await requestCurrecyConvert(+e.target.value, currencyTo, currencyFrom);
+            const result = await requestCurrecyConvert(e.target.value, currencyTo, currencyFrom);
             dispatch(changeResultConver(result.result));
+            console.log(result);
         }
+        
         setLoader(false);
     };
 
@@ -48,7 +51,7 @@ export const Converter = () => {
 
     const reverseCurrency = async () => {
         setLoader(true);
-        setCurrency(+resultConvert);
+        setCurrency(resultConvert.toString());
         const to = currencyTo;
         const from = currencyFrom;
         dispatch(changeResultConver(currency));
@@ -60,13 +63,13 @@ export const Converter = () => {
         <>
             <div className={s.container}>
                 <div className={s.block}>
-                    <p className={s.text}>E меня есть:</p>
-                    <input className={s.input} type="number" value={currency} onChange={changeCurrency} placeholder="введите число..." />
+                    <p className={s.text}>У меня есть:</p>
+                    <input className={s.input} type="text" value={currency} onChange={changeCurrency} placeholder="введите число..." />
 
-                    <select className={s.select} onChange={selectCurrencyTo}>
+                    <select className={s.select} onChange={selectCurrencyFrom}>
                         {allCurrencyKey.map((el: string, index: number) => {
                             return (
-                                <option selected={currencyTo === el ? true : false} key={index} value={el}>
+                                <option selected={currencyFrom === el ? true : false} key={index} value={el}>
                                     {el} {allCurrencyName[index]}
                                 </option>
                             );
@@ -84,12 +87,12 @@ export const Converter = () => {
                     <p className={s.text}>Хочу купить:</p>
 
                     <p className={s.result}>
-                        {resultConvert} {resultConvert > 0 && currencyFrom}
+                        {resultConvert} {resultConvert > 0 && currencyTo}
                     </p>
-                    <select className={s.select} onChange={selectCurrencyFrom}>
+                    <select className={s.select} onChange={selectCurrencyTo}>
                         {allCurrencyKey.map((el: string, index: number) => {
                             return (
-                                <option selected={currencyFrom === el ? true : false} key={index} value={el}>
+                                <option selected={currencyTo === el ? true : false} key={index} value={el}>
                                     {el} {allCurrencyName[index]}
                                 </option>
                             );
